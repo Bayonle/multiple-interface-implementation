@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using multiple_interface_implementation.Config;
+using multiple_interface_implementation.Controllers.Interfaces;
+using multiple_interface_implementation.Implementations;
 
 namespace multiple_interface_implementation
 {
@@ -26,6 +29,9 @@ namespace multiple_interface_implementation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IEmailSender, EmailSenderA>();
+            services.AddScoped<IEmailSender, EmailSenderB>();
+            services.Configure<EmailSettings>(Configuration.GetSection(nameof(EmailSettings)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
